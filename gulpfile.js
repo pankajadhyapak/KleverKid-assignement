@@ -17,6 +17,7 @@ elixir(function(mix) {
         'select2.css',
         'sweetalert.css',
         'lity.css',
+        'dropzone.css',
         'app.css'
     ]);
 
@@ -24,6 +25,7 @@ elixir(function(mix) {
         'jquery.js',
         'bootstrap.js',
         'select2.js',
+        'dropzone.js',
         'sweetalert.js',
         'lity.js',
         'app.js'
