@@ -1,0 +1,33 @@
+.navbar{
+    margin-bottom: 0px;
+    background: linear-gradient(135deg,#573e81,#133259 40%,#133259);
+    border: none;
+    border-radius: 0px;
+}
+
+.navbar-default .navbar-brand {
+    color: #fff;
+}
+.navbar-default .navbar-nav>li>a {
+    color: #fff;
+}
+.navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover {
+    color: #ddd;
+    background-color: transparent;
+}
+.navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover {
+    color: #ddd;
+    background-color: transparent;
+}
+.page-header {
+    background: linear-gradient(135deg,#573e81,#133259 40%,#133259);
+    color: #fff;
+    padding: 40px;
+    margin: 0px;
+}
+
+.page-header small{
+    color: #ddd;
+}
+
+.page-content{ margin-top: 30px; }

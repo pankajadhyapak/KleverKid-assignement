@@ -96,7 +96,9 @@ class AcademyController extends Controller
     {
         $academy = Academy::findOrFail($id);
 
-        event(new AcademyViewed($academy, $request));
+        session()->has('first_time') ? '': event(new AcademyViewed($academy, $request)) ;
+
+        session(['first_time' => 'true']);
 
         return view('academies.show', compact('academy'));
     }

@@ -38,6 +38,23 @@
             </ul>
         </div>
         <div class="col-md-6">
+            {{--@foreach(array_chunk($academy->images->toArray(), 2) as $items)--}}
+                {{--@foreach($items as $image)--}}
+                    {{--<img src="/uploads/{{$image->image_path}}" alt="{{ $academy->academy_name }}" class="img-thumbnail">--}}
+                {{--@endforeach--}}
+            {{--@endforeach--}}
+            <div class="row">
+                @foreach($academy->images as $image)
+                        <div class="col-md-6">
+                            <a href="/uploads/{{$image->image_path}}" data-lity>
+                                <img
+                                        src="/uploads/{{$image->image_path}}"
+                                        alt="{{ $academy->academy_name }}"
+                                        class="img-thumbnail">
+                            </a>
+                        </div>
+                @endforeach
+            </div>
 
         </div>
     </div>

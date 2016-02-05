@@ -8,10 +8,8 @@
     <title>Klever Kid Assignmente</title>
 
     <!-- Bootstrap -->
-    <link href="/css/app.css" rel="stylesheet">
-    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" />
-    <link href="/css/sweetalert.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.2.0/dropzone.css">
+    <link href="/css/all.css" rel="stylesheet">
+
 
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -33,13 +31,8 @@
 </div>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="/js/jquery.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
+<script src="/js/all.js"></script>
 
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="/js/bootstrap.js"></script>
-<script src="/js/sweetalert.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.2.0/dropzone.js"></script>
 @include('sweet::alert')
 @yield('footer')
 </body>

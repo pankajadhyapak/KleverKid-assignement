@@ -33,6 +33,7 @@ Route::get('tagSeed', function(){
 */
 
 Route::group(['middleware' => ['web']], function () {
+
     Route::get('/', 'AcademyController@create');
     Route::resource('academies', 'AcademyController');
     Route::get('academies/{id}/addImages', 'AcademyController@addImages');
