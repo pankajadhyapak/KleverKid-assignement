@@ -11,8 +11,14 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+Route::get('tagSeed', function(){
+
+    $tags = ['technical','arts','commerce','science','economics'];
+
+    foreach($tags as $tag){
+        \App\Tag::create(['name' => $tag]);
+   }
 });
 
 /*
@@ -27,5 +33,9 @@ Route::get('/', function () {
 */
 
 Route::group(['middleware' => ['web']], function () {
-    //
+    Route::get('/', 'AcademyController@create');
+    Route::resource('academies', 'AcademyController');
+    Route::get('academies/{id}/addImages', 'AcademyController@addImages');
+    Route::post('academies/{id}/addImages', 'AcademyController@saveImages');
+    Route::get('academies/{id}/complete', 'AcademyController@complete');
 });
