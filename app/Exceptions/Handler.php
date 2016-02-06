@@ -46,6 +46,12 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+
+//        if($e instanceof ModelNotFoundException || $e instanceof NotFoundHttpException){
+//            \Alert::error("That Page Doesn't Exist");
+//            return redirect('/');
+//        }
+
         return parent::render($request, $e);
     }
 }

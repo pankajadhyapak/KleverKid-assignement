@@ -4,12 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Academy;
 use App\Events\AcademyViewed;
+use App\Http\Requests;
+use App\Http\Requests\AcademyUpdate;
 use App\Http\Requests\NewAcademy;
-use App\Image;
 use App\Tag;
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
 
 class AcademyController extends Controller
 {
@@ -104,9 +103,19 @@ class AcademyController extends Controller
      */
     public function complete($id)
     {
-        \Alert::success('Great !! Academy Created Successfully');
 
-        return redirect(route('academies.index'));
+        $academy = Academy::find($id);
+
+        if($academy && $academy->images){
+
+            \Alert::success('Great !! Academy Created Successfully');
+            return redirect(route('academies.index'));
+
+        }else{
+            \Alert::error('Error !!', 'Please Add Images to Complete');
+            return redirect()->back();
+        }
+
 
     }
 
@@ -120,13 +129,76 @@ class AcademyController extends Controller
      */
     public function show($id, Request $request)
     {
-        $academy = Academy::findOrFail($id);
+        $academy = Academy::with('tags','images')->findOrFail($id);
 
-        session()->has("first_time $academy->id") ? '': event(new AcademyViewed($academy, $request->ip())) ;
+        session()->get("first_time $academy->id") ? '': event(new AcademyViewed($academy, $request->ip())) ;
 
-        session(["first_time $academy->id" => 'true']);
+        session()->put(["first_time $academy->id" => 'true']);
 
         return view('academies.show', compact('academy'));
+    }
+
+
+    /**
+     * SHoe view to Edit resource
+     *
+     * @param                          $id
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function edit($id, Request $request)
+    {
+        $academy = Academy::findOrFail($id);
+        $tags = Tag::lists('name', 'id');
+
+        return view('academies.edit', compact(['tags','academy']));
+    }
+
+    /**
+     * Save Edited Resource
+     * @param                                  $id
+     * @param \App\Http\Requests\AcademyUpdate $request
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function update($id, AcademyUpdate $request)
+    {
+        $academy = Academy::findOrFail($id);
+        $academy->fill($request->all());
+        $academy->tags()->sync($request->get('tags'));
+        $academy->save();
+
+        return redirect(route('academies.show', $academy->id));
+
+    }
+
+    /**
+     * Show All Academies in list
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function all()
+    {
+        $academies = Academy::all();
+
+        return view('academies.all', compact('academies'));
+    }
+
+    /**
+     * Delete a particular Resource
+     * @param $id
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function destroy($id)
+    {
+        $academy = Academy::findOrFail($id);
+
+        $academy->delete();
+
+        \Alert::success('Academy Deleted Successfully');
+
+        return redirect('academies/all');
     }
 
 }

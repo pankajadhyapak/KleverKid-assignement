@@ -12,6 +12,11 @@
 */
 
 
+\DB::listen(function($sql) {
+//    dd($sql);
+});
+
+
 Route::get('tagSeed', function(){
 
     $tags = ['technical','arts','commerce','science','economics'];
@@ -22,9 +27,6 @@ Route::get('tagSeed', function(){
 
 });
 
-Route::get('clearSession', function(){
-    return session()->flush();
-});
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +42,8 @@ Route::get('clearSession', function(){
 Route::group(['middleware' => ['web']], function () {
 
     Route::get('/', 'AcademyController@index');
+    Route::get('academies/all', 'AcademyController@all');
+
     Route::resource('academies', 'AcademyController');
     Route::get('academies/{id}/addImages', 'AcademyController@addImages');
     Route::post('academies/{id}/addImages', 'AcademyController@saveImages');

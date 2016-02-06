@@ -35,6 +35,18 @@
                     {{ $academy->description }}
                 </li>
 
+                <li class="list-group-item">
+                    <h4>Tags</h4>
+                    @foreach($academy->tags as $tag)
+                        <span class="label label-primary">{{ $tag->name }}</span>
+                    @endforeach
+                </li>
+
+                <li class="list-group-item">
+                    <h4>User Name</h4>
+                    {{ $academy->user_name }}
+                </li>
+
             </ul>
         </div>
         <div class="col-md-6">

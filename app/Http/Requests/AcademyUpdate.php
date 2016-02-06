@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class NewAcademy extends Request
+class AcademyUpdate extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -32,7 +32,7 @@ class NewAcademy extends Request
             "tags" => "required",
             "description" => "required",
             "latitude" => "required|numeric",
-            "longitude" => "required|numeric|unique:academies,longitude,NULL,id,latitude,".$this->get('latitude'),
+            "longitude" => "required|numeric|unique:academies,longitude,".$this->get('id').",id,latitude,".$this->get('latitude'),
         ];
     }
 }

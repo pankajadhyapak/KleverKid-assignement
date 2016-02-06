@@ -10,7 +10,7 @@
 @section('content')
 
     <div class="map-container">
-        <div id="map" style="height: 500px;"></div>
+        <div id="map" style="height: 600px;"></div>
     </div>
 
 
@@ -26,33 +26,32 @@
 
             var map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 4,
-                center: places[0]
+                center: places[0] ? places[0] : {lat:12.9667,lng:77.5667} //Default Center Bangalore
             });
 
             var contentString =
                     [
                             @foreach($academies as $academy)
 
-                        {'content' :'<div id="content">'+
-                                    '<div id="siteNotice">'+
-                                    '</div>'+
-                                    '<h1 id="firstHeading" class="firstHeading"><a target="_NEW" href="{{ url(route('academies.show', $academy->id )) }}">{{ $academy->academy_name }}</a></h1>'+
-                                    '<div id="bodyContent">'+
-                                    '<p>{{ $academy->description }}</p>'+
-                                    '</div>'+
-                                    '</div>'
-                        },
+                                {'content' :'<div id="content">'+
+                                            '<div id="siteNotice">'+
+                                            '</div>'+
+                                            '<h1 id="firstHeading" class="firstHeading"><a target="_NEW" href="{{ url(route('academies.show', $academy->id )) }}">{{ $academy->academy_name }}</a></h1>'+
+                                            '<div id="bodyContent">'+
+                                            '<p>{{ $academy->description }}</p>'+
+                                            '</div>'+
+                                            '</div>'
+                                },
                             @endforeach
                     ];
-                    var infoWindows = [];
-                    @for ($i = 0; $i < count($academies); $i++)
-                                    infoWindows.push(new google.maps.InfoWindow({
+            var infoWindows = [];
+            @for ($i = 0; $i < count($academies); $i++)
+                infoWindows.push(
+                    new google.maps.InfoWindow({
                         content: contentString[{{ $i }}].content,
-                        maxWidth: 400
-                    }));
-                    @endfor
-
-                    console.log(infoWindows);
+                        maxWidth: 400})
+                    );
+             @endfor
 
             var markers = [];
             @for ($i = 0; $i < count($academies); $i++)
@@ -61,20 +60,17 @@
                         map: map,
                         title: '{{ $academies[$i]->academy_name }}'
                     }));
-            markers[{{$i}}].addListener('click', function() {
-                infoWindows[{{$i}}].open(map, markers[{{$i}}]);
-                @for ($j = 0; $j < count($academies); $j++)
-                    @if($j != $i)
-                        infoWindows[{{$j}}].close();
-                    @endif
-                @endfor
 
-            });
+                markers[{{$i}}].addListener('click', function() {
+                    infoWindows[{{$i}}].open(map, markers[{{$i}}]);
+                    @for ($j = 0; $j < count($academies); $j++)
+                        @if($j != $i)
+                            infoWindows[{{$j}}].close();
+                        @endif
                     @endfor
 
-
-
-
+                        });
+                    @endfor
         }
 
     </script>
