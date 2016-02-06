@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
+    <title>New Academy Viewed</title>
 </head>
 <body>
 
- Academy {{ $academy->academy_name }} was viewed at {{ \Carbon\Carbon::now() }} by Ip Address {{ $ip }}
+ Academy <strong>{{ $academy->academy_name }}</strong>
+ was viewed at <strong>{{ \Carbon\Carbon::now() }}</strong>
+ by Ip Address <strong>{{ $ip }}</strong>
 </body>
 </html>

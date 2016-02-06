@@ -13,16 +13,17 @@ class AcademyViewed extends Event
     use SerializesModels;
 
     public $academy;
-    public $request;
+    public $ip;
 
     /**
      * Create a new event instance.
      *
-     * @return void
+     * @param \App\Academy $academy
+     * @param              $ip
      */
-    public function __construct(Academy $academy, Request $request)
+    public function __construct(Academy $academy,  $ip)
     {
-        $this->request = $request;
+        $this->ip = $ip;
         $this->academy = $academy;
     }
 

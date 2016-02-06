@@ -19,6 +19,7 @@ Route::get('tagSeed', function(){
     foreach($tags as $tag){
         \App\Tag::create(['name' => $tag]);
    }
+
 });
 
 /*
@@ -34,7 +35,7 @@ Route::get('tagSeed', function(){
 
 Route::group(['middleware' => ['web']], function () {
 
-    Route::get('/', 'AcademyController@create');
+    Route::get('/', 'AcademyController@index');
     Route::resource('academies', 'AcademyController');
     Route::get('academies/{id}/addImages', 'AcademyController@addImages');
     Route::post('academies/{id}/addImages', 'AcademyController@saveImages');

@@ -10,8 +10,6 @@ use App\Tag;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use UxWeb\SweetAlert\SweetAlert;
 
 class AcademyController extends Controller
 {
@@ -22,9 +20,7 @@ class AcademyController extends Controller
      */
     public function index()
     {
-
-        $academies = Academy::with('tags','images')->get();
-
+        $academies = Academy::all();
         return view('academies.index', compact('academies'));
     }
 
@@ -36,7 +32,6 @@ class AcademyController extends Controller
     public function create()
     {
         $tags = Tag::lists('name', 'id');
-
         return view('academies.create', compact('tags'));
     }
 
@@ -51,33 +46,62 @@ class AcademyController extends Controller
     {
 
         $academy = Academy::create($request->all());
+
         $academy->tags()->sync($request->get('tags'));
 
         return redirect("academies/$academy->id/addImages");
 
     }
 
+
+    /**
+     * Show View to Add Images to particular academy
+     * @param $id
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function addImages($id)
     {
         $academy = Academy::findOrFail($id);
+
         return view('academies.addimages', compact('academy'));
     }
 
+    /**
+     * Save Uploaded Image and attach it to Academy
+     * @param                          $id
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function saveImages($id, Request $request)
     {
 
         $file = $request->file('file');
 
-        $photoName = time().$file->getClientOriginalName();
+        if($file){
 
-        $file->move(public_path()."/uploads/", $photoName);
+            $photoName = time().$file->getClientOriginalName();
 
-        $academy = Academy::findOrFail($id);
-        $academy->images()->create(['image_path' => $photoName]);
+            $file->move(public_path()."/uploads/", $photoName);
 
-        return response()->json(['done']);
+            $academy = Academy::findOrFail($id);
+
+            $academy->images()->create(['image_path' => $photoName]);
+
+            return response()->json(['done']);
+
+        }else{
+            return response()->json(['invalid File']);
+        }
     }
 
+    /**
+     * Complete teh Academy creation process
+     * @param $id
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function complete($id)
     {
         \Alert::success('Great !! Academy Created Successfully');
@@ -89,51 +113,20 @@ class AcademyController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int                     $id
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function show($id, Request $request)
     {
         $academy = Academy::findOrFail($id);
 
-        session()->has('first_time') ? '': event(new AcademyViewed($academy, $request)) ;
+        session()->has('first_time') ? '': event(new AcademyViewed($academy, $request->ip())) ;
 
         session(['first_time' => 'true']);
 
         return view('academies.show', compact('academy'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

@@ -31,3 +31,8 @@
 }
 
 .page-content{ margin-top: 30px; }
+footer.footer {
+    background: #eee;
+    margin-top: 20px;
+    padding: 20px;
+}

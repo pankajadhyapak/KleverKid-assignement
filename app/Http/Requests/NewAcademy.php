@@ -25,14 +25,14 @@ class NewAcademy extends Request
     {
         return [
             "user_name" => "required",
-            "academy_name" => "required",
+            "academy_name" => "required|alpha",
             "timeslots" => "required",
-            "email" => "required",
-            "phone" => "required",
+            "email" => "required|email",
+            "phone" => "required|min:10|max:10",
             "tags" => "required",
             "description" => "required",
-            "latitude" => "required",
-            'longitude' => "required"
+            "latitude" => "required|numeric",
+            "longitude" => "required|numeric|unique:academies,longitude,NULL,id,latitude,".$this->get('latitude'),
         ];
     }
 }

@@ -30,6 +30,12 @@
     @yield('content')
 </div>
 
+
+<footer class="footer">
+    <div class="container">
+        &copy; Klever Kid
+    </div>
+</footer>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="/js/all.js"></script>
 
