@@ -121,7 +121,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group{{ $errors->has('latitude') ? ' has-error' : '' }}">
-                                    <label class="control-label" for="latitude">Latitude</label>
+                                    <label for="latitude">Latitude</label>
                                     <input type="text" class="form-control" id="latitude" name="latitude" value="{{ old('latitude') }}">
                                     @if ($errors->has('latitude'))
                                         <span class="help-block">
@@ -143,7 +143,7 @@
                             </div>
                         </div>
 
-                        <input type="submit" class="btn btn-primary">
+                        <input type="submit" class="btn btn-primary" value="Save and Add Images">
                     </form>
                 </div>
             </div>

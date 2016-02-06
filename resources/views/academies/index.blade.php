@@ -38,7 +38,7 @@
                                             '</div>'+
                                             '<h1 id="firstHeading" class="firstHeading"><a target="_NEW" href="{{ url(route('academies.show', $academy->id )) }}">{{ $academy->academy_name }}</a></h1>'+
                                             '<div id="bodyContent">'+
-                                            '<p>{{ $academy->description }}</p>'+
+                                            '<p>{{  json_encode($academy->description) }}</p>'+
                                             '</div>'+
                                             '</div>'
                                 },
