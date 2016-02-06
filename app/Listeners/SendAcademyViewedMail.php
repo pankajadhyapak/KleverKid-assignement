@@ -28,7 +28,6 @@ class SendAcademyViewedMail
     {
 
         Mail::queue('emails.academyviewed', ['academy' => $event->academy, 'ip' => $event->ip], function ($m){
-
             $m->from('views@kleverkid.com', 'Klever Kid');
             $m->to('pankajkleverkid@gmail.com', 'Klever kid Admin')->subject('New Academy View');
         });

@@ -22,6 +22,10 @@ Route::get('tagSeed', function(){
 
 });
 
+Route::get('clearSession', function(){
+    return session()->flush();
+});
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes

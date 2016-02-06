@@ -122,9 +122,9 @@ class AcademyController extends Controller
     {
         $academy = Academy::findOrFail($id);
 
-        session()->has('first_time') ? '': event(new AcademyViewed($academy, $request->ip())) ;
+        session()->has("first_time $academy->id") ? '': event(new AcademyViewed($academy, $request->ip())) ;
 
-        session(['first_time' => 'true']);
+        session(["first_time $academy->id" => 'true']);
 
         return view('academies.show', compact('academy'));
     }

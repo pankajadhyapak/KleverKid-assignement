@@ -25,6 +25,7 @@ class AcademyViewed extends Event
     {
         $this->ip = $ip;
         $this->academy = $academy;
+
     }
 
     /**
